@@ -1,10 +1,8 @@
-import amp
 import cmath
 import math
 import random
 
 precision = 12
-amp.precision = precision + 5
 _digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 openBrackets = {"(", "{", "["}
 closeBrackets = {")", "}", "]"}
@@ -261,3 +259,6 @@ def evaluateFunctions(expression):
         for func in functions:
                 expression = evalFunc(expression, func)
         return expression
+
+import amp
+amp.precision = precision + 5
