@@ -10,7 +10,7 @@ The documentation available as of the date of this release is included in the do
 
 Installation can be done by opening your computer's terminal and entering the following:
 
-‘$ pip install AMP’
+'$ pip install AMP'
 
 ## License
 
