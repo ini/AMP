@@ -202,7 +202,7 @@ def evalFunc(expression, function):
         for digit in _digits:
                 expression = expression.replace(digit + function, digit + "*" + function)
         for bracket in closeBrackets:
-                expression = expression.replace(bracket + function, bracket + "*" + funtionc)
+                expression = expression.replace(bracket + function, bracket + "*" + function)
                 
         # Finds the opening and closing brackets for the special mathematical function
         while expression.find(function) != -1:
