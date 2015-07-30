@@ -200,9 +200,9 @@ def multArgsFuncEval(function, arguments):
                         
 def evalFunc(expression, function):
         for digit in _digits:
-                expression = expression.replace(digit + func, digit + "*" + func)
+                expression = expression.replace(digit + function, digit + "*" + function)
         for bracket in closeBrackets:
-                expression = expression.replace(bracket + func, bracket + "*" + func)
+                expression = expression.replace(bracket + function, bracket + "*" + funtionc)
                 
         # Finds the opening and closing brackets for the special mathematical function
         while expression.find(function) != -1:
