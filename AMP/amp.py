@@ -60,8 +60,11 @@ def _indexOfPreviousOperator(expression, currentIndex):
 def _pemdas(expression, operators):
         while _indexOfSpecificOperators(expression, operators) != -1:
                 # Returns the current expression if all that's left is a complex number
-                if expression.find(">") > expression.rfind("<") and expression[0] == "<" and expression[len(expression) - 1] == ">":
-                        return expression[1 : len(expression) - 1]
+                if expression.find(">") > expression.rfind("<"):
+                        if expression[0] == "<" and expression[len(expression) - 1] == ">":
+                                return expression[1 : len(expression) - 1]
+                        elif expression[:2] == "-<" and expression[len(expression) - 1] == ">":
+                                return eval("-1*(" + expression[2 : len(expression) - 1] + ")")
                         
                 # Finds the next operator of the given type, along with the operators before and after it
                 if operators == {"^"}:
@@ -79,7 +82,7 @@ def _pemdas(expression, operators):
 
                 # Skips previous operator if operator is part of a complex number expression
                 if previousIndex != -1 and previousIndex < _indexOfPreviousCharacters(expression, {">"}, currentIndex):
-                        previousIndex = _indexOfPreviousOperator(expression[:expression[:previousIndex].rfind("<")], previousIndex)
+                        previousIndex = _indexOfPreviousCharacters(expression[:expression[:previousIndex].rfind("<")], _operatorSet, previousIndex)
 
                 # Skips current operator if the operator is part of a complex number expression (the +/- in "a +/- bi")
                 if expression.find(">") != -1 and _indexOfOperator(expression[expression.find(">"):]) > 0 and currentIndex > expression.find("<") and currentIndex < expression.find(">"):
@@ -95,15 +98,15 @@ def _pemdas(expression, operators):
                         nextIndex += _indexOfOperator(expression[expression[nextIndex:].find(">") + nextIndex:]) + expression[nextIndex:].find(">")
                         if nextIndex == tempNext - 1:
                                 nextIndex = len(expression)
-                                              
+                             
                 # Replaces all "i"s with "j"s to be parsed as complex numbers
                 expression = expression[:previousIndex + 1] + expression[previousIndex + 1 : nextIndex].replace("i", "j") + expression[nextIndex:] 
 
                 # Parses the string to find values in the expression at the operator
-                firstNum = complex(expression[previousIndex + 1 : currentIndex].replace("<", "").replace(">", ""))
+                firstNum = complex(expression[previousIndex + 1 : currentIndex].replace("<", "").replace(">", "").replace("--", ""))
                 secondNum = 0
                 try:
-                        secondNum = complex(expression[currentIndex + 1 : nextIndex].replace("<", "").replace(">", ""))
+                        secondNum = complex(expression[currentIndex + 1 : nextIndex].replace("<", "").replace(">", "").replace("--", ""))
                 except:
                         pass
                 result = 0
@@ -143,7 +146,6 @@ def _format(expression):
         expression = expression.replace("--", "+")
         expression = expression.replace("+-", "-")
         expression = expression.replace(")(", ")*(")
-        expression = expression.replace("-(", "-1*(")
         expression = expression.replace("mod", "%")
 
         # Substitutes in values for mathematical constants
@@ -190,9 +192,6 @@ def noScientificNotation(expression):
                                         nextOperatorIndex += index 
                         else:
                                 nextOperatorIndex += index + 1                                
-                        print expression
-                        print expression[previousOperatorIndex + 1:nextOperatorIndex] + "aa"
-                        print expression
                         coefficient = float(expression[previousOperatorIndex + 1: index])
                         exponent = float(expression[index + 1 : nextOperatorIndex])
 
@@ -251,6 +250,7 @@ def numberFormat(num):
                 
 def eval(expression):
         expression = _format(expression)
+
         # Parenthesis and Brackets
         while _indexOfSpecificCharacters(expression, closeBrackets) != -1:
                 # Finds first close bracket symbol, then finds the preceeding open bracket symbol
@@ -260,6 +260,19 @@ def eval(expression):
                         openBracketIndex = -1
                 # Evaluates the expression in the brackets and substitutes it into the overall expression
                 answer = eval(expression[openBracketIndex + 1 : closeBracketIndex])
+
+                # Accounts for unary negation outside brackets
+                if openBracketIndex > 0 and expression[openBracketIndex - 1] == "-":
+                        if openBracketIndex > 1 and expression[openBracketIndex - 2] in _operatorSet:
+                                answer = eval("-1*(" + answer + ")")
+                                openBracketIndex -= 1
+                        """
+                        elif openBracketIndex == 1:
+                                answer = eval("-1*(" + answer + ")")
+                                openBracketIndex -= 1
+                        """
+                        
+                                
                 if complex(answer.replace("i", "j")).imag != 0 or complex(answer.replace("i", "j")).real < 0:
                         answer = "<" + answer + ">"
                 expression = expression[:openBracketIndex] + answer + expression[closeBracketIndex + 1:]
