@@ -177,13 +177,22 @@ def _format(expression):
 # Public Methods
 
 def noScientificNotation(expression):
-        for index in xrange(1, len(expression)):
-                if expression[index] == "e" and expression[index - 1] in _digits:
+        while expression.find("e") > 0 and expression[expression.find("e") - 1] in _digits:
+                        index = expression.find("e")
                         # Separate out coefficient and exponent from scientific notation
                         previousOperatorIndex = _indexOfPreviousOperator(expression, index)
                         nextOperatorIndex = _indexOfOperator(expression[index + 1:])
                         if nextOperatorIndex == -1:
-                                nextOperatorIndex = len(expression)
+                                nextOperatorIndex = _indexOfSpecificCharacters(expression[index:], closeBrackets)
+                                if nextOperatorIndex == -1:
+                                        nextOperatorIndex = len(expression)
+                                else:
+                                        nextOperatorIndex += index 
+                        else:
+                                nextOperatorIndex += index + 1                                
+                        print expression
+                        print expression[previousOperatorIndex + 1:nextOperatorIndex] + "aa"
+                        print expression
                         coefficient = float(expression[previousOperatorIndex + 1: index])
                         exponent = float(expression[index + 1 : nextOperatorIndex])
 
