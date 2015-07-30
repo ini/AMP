@@ -133,7 +133,7 @@ def oneArgFuncEval(function, value):
         elif function == "trunc":
                 return math.trunc(value.real) + complex(0, 1) * math.trunc(value.imag)
         elif function == "fac":
-                if value < 0 and value.real == int(value.real):
+                if value.imag == 0 and value < 0 and value.real == int(value.real):
                         return "Error: The factorial function is not defined on the negative integers."
                 return gamma(value + 1)
                                 
