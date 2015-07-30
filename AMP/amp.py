@@ -260,7 +260,7 @@ def eval(expression):
                         openBracketIndex = -1
                 # Evaluates the expression in the brackets and substitutes it into the overall expression
                 answer = eval(expression[openBracketIndex + 1 : closeBracketIndex])
-                if complex(answer.replace("i", "j")).imag != 0:
+                if complex(answer.replace("i", "j")).imag != 0 or complex(answer.replace("i", "j")).real < 0:
                         answer = "<" + answer + ">"
                 expression = expression[:openBracketIndex] + answer + expression[closeBracketIndex + 1:]
 
