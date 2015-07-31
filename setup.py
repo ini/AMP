@@ -2,10 +2,10 @@ from distutils.core import setup
 
 setup(
     name='AMP',
-    version='1.0.0.0',
+    version='1.1',
     author='Ini Oguntola',
     author_email='ioguntol@gmail.com',
-    packages=['AMP'],
+    packages=['AMP', 'AMP.test'],
     scripts=[],
     url='http://github.com/ioguntol/Automatic-Mathematical-Parser/',
     license='LICENSE.txt',

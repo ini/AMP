@@ -266,12 +266,6 @@ def eval(expression):
                         if openBracketIndex > 1 and expression[openBracketIndex - 2] in _operatorSet:
                                 answer = eval("-1*(" + answer + ")")
                                 openBracketIndex -= 1
-                        """
-                        elif openBracketIndex == 1:
-                                answer = eval("-1*(" + answer + ")")
-                                openBracketIndex -= 1
-                        """
-                        
                                 
                 if complex(answer.replace("i", "j")).imag != 0 or complex(answer.replace("i", "j")).real < 0:
                         answer = "<" + answer + ">"

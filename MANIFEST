@@ -4,3 +4,5 @@ setup.py
 AMP/__init__.py
 AMP/amp.py
 AMP/funcEval.py
+AMP/test/__init__.py
+AMP/test/ampTests.py

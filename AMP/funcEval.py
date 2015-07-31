@@ -136,6 +136,8 @@ def oneArgFuncEval(function, value):
                 if value.imag == 0 and value < 0 and value.real == int(value.real):
                         return "Error: The factorial function is not defined on the negative integers."
                 return gamma(value + 1)
+        elif function == "log":
+                return cmath.log10(value)
                                 
 def multArgsFuncEval(function, arguments):
         # Evaluates functions with multiple parameters
@@ -187,7 +189,7 @@ def multArgsFuncEval(function, arguments):
                 return answer
         elif function == "log":
                 if len(arguments) == 1:
-                        return cmath.log10(value)
+                        return cmath.log10(arguements[0])
                 elif len(arguments) == 2:
                         return cmath.log(arguments[0], arguements[1])
                 else:
@@ -203,7 +205,8 @@ def evalFunc(expression, function):
                 expression = expression.replace(digit + function, digit + "*" + function)
         for bracket in closeBrackets:
                 expression = expression.replace(bracket + function, bracket + "*" + function)
-                
+        expression = expression.replace("i" + function, "i" + "*" + function).replace("j" + function, "j" + "*" + function)
+        
         # Finds the opening and closing brackets for the special mathematical function
         while expression.find(function) != -1:
                 functionIndex = expression.find(function)
@@ -219,11 +222,15 @@ def evalFunc(expression, function):
                                 break
                         closeBracketIndex += 1
                 answer = 0
-
+                
                 # Evaluates subexpressions
                 for bracket in openBrackets:
                         if expression[openBracketIndex + 1 : closeBracketIndex].find(bracket) != -1:
-                                expression = expression[:openBracketIndex + 1] + evaluateFunctions(expression[openBracketIndex + 1 : closeBracketIndex]) + expression[closeBracketIndex + 1:]
+                                beginning = expression[:openBracketIndex + 1]
+                                end = expression[closeBracketIndex:]
+                                subExpr = evaluateFunctions(expression[openBracketIndex + 1 : closeBracketIndex])
+                                expression = beginning + subExpr + end
+                                closeBracketIndex = len(beginning) + len(subExpr)
 
                 if function in funcMultArgs:
                         # Separates the parameteres of any function with multiple arguments into a list and evaluates function
@@ -242,7 +249,6 @@ def evalFunc(expression, function):
                                         args[i] = args[i].real
                         answer = multArgsFuncEval(function, args)
                 else:
-                        amp.eval(expression[openBracketIndex + 1 : closeBracketIndex])
                         # Evaluates the expression inside the brackets
                         value = complex(amp.eval(expression[openBracketIndex + 1 : closeBracketIndex]).replace("i", "j"))
                         if function not in funcComplexArgs:
@@ -250,7 +256,7 @@ def evalFunc(expression, function):
                                         return "Error: '" + function + "' does not except nonreal arguments."                                       
                                 value = value.real
                         answer = oneArgFuncEval(function, value)
-                        
+
                 expression = expression[:functionIndex] + amp.complexFormat(answer) + expression[closeBracketIndex + 1:]
         return expression
 

@@ -1,1 +1,8 @@
 v1.0.0.0, 7/30/15 -- Initial release.
+
+v1.1, 7/30/15
+* Added tests package ‘ampTests’
+* Fixed issue with recursive evaluation of expressions within functions
+* Fixed issue with unary negation of expressions in parentheses
+* Fixed issue with noScientificNotation conversion
+* Fixed issue with factorial function error messages.
