@@ -9,3 +9,6 @@ v1.1, 7/30/15
 
 v1.1.1 7/31/15
 * Updated test cases
+
+v1.1.2 7/31/15
+# Fixed issue with test.py
