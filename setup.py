@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='AMP',
-    version='1.1',
+    version='1.1.1',
     author='Ini Oguntola',
     author_email='ioguntol@gmail.com',
     packages=['AMP', 'AMP.test'],
