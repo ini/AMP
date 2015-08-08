@@ -1,6 +1,6 @@
 # AMP: Automatic Mathematical Parser
 
-Python library that parses and evaluates any string numerical mathematical expression, with support for complex numbers and mathematical constants, as well as scientific notation and a wide range of mathematical functions.
+Python 2.7 library that parses and evaluates any string numerical mathematical expression, with support for complex numbers and mathematical constants, as well as scientific notation and a wide range of mathematical functions.
 
 ## Documentation
 
