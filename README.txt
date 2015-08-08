@@ -9,9 +9,14 @@ The documentation available as of the date of this release is included in the do
 
 Installation
 ------------
-Installation can be done by opening your computer's terminal and entering the following::
+Installation of this package uses pip, included by default in Python 2.7.9 and later. If your computer doesn’t have pip, download `this file
+<http://bootstrap.pypa.io/get-pip.py>`_. Then open up your terminal and enter the command shown below::
 
-$ pip install AMP
+ python get-pip.py
+
+Installation of the AMP package can be done by opening your computer's terminal and entering the following::
+
+ pip install AMP
 
 License
 -------
@@ -22,7 +27,7 @@ Links
 The most up-to-date version of this software can be found at:
 
 * https://github.com/ioguntol/Automatic-Mathematical-Parser
-* https://pypi.python.org/pypi/AMP/0.1.0
+* https://pypi.python.org/pypi/AMP/
 
 Contact
 -------
